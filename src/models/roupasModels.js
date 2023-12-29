@@ -1,7 +1,10 @@
 const connection = require('./connect')
 
+
+
 const getAll = async () => {
     const client = await connection();
+
     try {
         const res = await client.query('SELECT * FROM TB_PRODUTO')
         return res.rows
@@ -14,10 +17,8 @@ const getAll = async () => {
 }
 
 const addRoupa = async (roupa) => {
-    
+    const client = await connection();
 
-    const client = await connection()
-    
     try {
         const  { img, name, value, stock  } = roupa;
 
@@ -31,9 +32,41 @@ const addRoupa = async (roupa) => {
     }
 }
 
-module.exports = {
-    getAll,
-    addRoupa
+const deleteRoupa  = async (id) => {
+    const client = await connection();
+
+    try {
+        const removedRoupa = await client.query('delete from tb_produto where id_produto = $1', [id])
+        return removedRoupa
+    }catch(err) {
+        return err
+    } finally {
+        await client.end()
+    }
+   
+    
 }
 
-// 57:23 
+const updateRoupa = async (id, roupa) => {
+    const client = await connection()
+
+    try {
+        const {name} = roupa
+    
+        const updateRoupa = await client.query('update tb_produto set nm_produto = $1 where id_produto = $2', [name, id])
+        
+        return updateRoupa
+    } catch(err){
+        return err
+    } finally {
+        await client.end()
+    }
+
+}
+
+module.exports = {
+    getAll,
+    addRoupa,
+    deleteRoupa,
+    updateRoupa
+}

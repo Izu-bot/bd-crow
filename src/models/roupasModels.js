@@ -1,12 +1,10 @@
 const connection = require('./connect')
 
-
-
 const getAll = async () => {
     const client = await connection();
 
     try {
-        const res = await client.query('SELECT * FROM TB_PRODUTO')
+        const res = await client.query('select * from tb_produto')
         return res.rows
     } catch (err){
         console.log(err)
@@ -43,8 +41,6 @@ const deleteRoupa  = async (id) => {
     } finally {
         await client.end()
     }
-   
-    
 }
 
 const updateRoupa = async (id, roupa) => {
@@ -59,6 +55,7 @@ const updateRoupa = async (id, roupa) => {
     } catch(err){
         return err
     } finally {
+        console.log("Fechando conexão...")
         await client.end()
     }
 

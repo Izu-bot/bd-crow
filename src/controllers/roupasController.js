@@ -6,7 +6,7 @@ const getAll = async (_request, response) => {
     try {
         const roupas = await roupasModels.getAll()
 
-        return response.status(200).json(roupas);
+        return response.status(200).json(roupas)
     } catch (err) {
         return err + 'Não foi possivel retornar os dados...'
     }

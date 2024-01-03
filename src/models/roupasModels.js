@@ -18,7 +18,7 @@ const addRoupa = async (roupa) => {
     const client = await connection();
 
     try {
-        const  { img, name, value, stock  } = roupa;
+        const  { img, name, value, stock  } = roupa
 
         const createdRoupa = await client.query('insert into tb_produto (img_produto, nm_produto, vlr_produto, qtd_estoque) values ($1, $2, $3, $4);', [img, name, value, stock])
         return createdRoupa

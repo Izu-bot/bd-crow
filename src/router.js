@@ -4,6 +4,8 @@ const roupasMiddleware = require('./middlewares/roupasMiddlewares')
 
 const clienteController = require('./controllers/clientesController')
 const clienteMiddleware = require('./middlewares/clientesMiddlewares')
+
+const pedidoController = require('./controllers/pedidosController')
 const router = express.Router()
 
 // Router dos Produtos / Roupas
@@ -16,6 +18,12 @@ router.put('/roupas/:id', roupasController.updateRoupa)
 router.get('/clientes', clienteController.getAll)
 router.post('/clientes', clienteMiddleware.validadeBody, clienteController.addCliente)
 router.delete('/clientes/:id', clienteController.deleteCliente)
-router.put('/clientes/:id', clienteController.updateCLiente) 
+router.put('/clientes/:id', clienteController.updateCLiente)
+
+// Rotas de pedidos
+router.get('/pedidos', pedidoController.getAll)
+router.post('/pedidos', pedidoController.addPedido)
+router.delete('/pedidos/:id', pedidoController.deletePedido)
+router.put('/pedidos/:id', pedidoController.updatePedido)
 //  Rotas da app, roupas, carrinho, conta, criarConta
 module.exports = router

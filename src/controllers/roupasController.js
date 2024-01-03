@@ -28,18 +28,23 @@ const createdRoupa = async (request, response) => {
 
 const deleteRoupa = async (request, response) => {
     const { id } = request.params
-
-    await roupasModels.deleteRoupa(id)
-    return response.status(204).json()
-
+    try {
+        await roupasModels.deleteRoupa(id)
+        return response.status(204).json()
+    } catch (err) {
+        return 'Um erro inesperado aconteceu...' + err
+    }
 }
 
 const updateRoupa = async (request, response) => {
     const { id } = request.params
 
-
-    await roupasModels.updateRoupa(id, request.body)
-    return response.status(204).json()
+    try {
+        await roupasModels.updateRoupa(id, request.body)
+        return response.status(204).json()
+    } catch (err) {
+        return 'Um erro inesperado aconteceu...' + err
+    }
 }
 
 module.exports = {

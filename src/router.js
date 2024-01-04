@@ -8,6 +8,8 @@ const clienteMiddleware = require('./middlewares/clientesMiddlewares')
 const pedidoController = require('./controllers/pedidosController')
 
 const detalheController = require('./controllers/detalheController')
+
+const carrinhoController = require('./controllers/carrinhoController')
 const router = express.Router()
 
 // Router dos Produtos / Roupas
@@ -33,4 +35,10 @@ router.get('/detalhe', detalheController.getAll)
 router.post('/detalhe', detalheController.addDetalhe)
 router.delete('/detalhe/:id', detalheController.deleteDetalhe)
 router.put('/detalhe/:id', detalheController.updateDetalhe)
+
+// Rotas para o carrinho
+router.get('/carrinho', carrinhoController.getAll)
+router.post('/carrinho', carrinhoController.addCarrinho)
+router.delete('/carrinho/:id', carrinhoController.deleteCarrinho)
+router.put('/carrinho/:id', carrinhoController.updateCarrinho)
 module.exports = router

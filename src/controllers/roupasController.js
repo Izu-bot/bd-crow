@@ -13,6 +13,17 @@ const getAll = async (_request, response) => {
 
 }
 
+const getId = async (request, response) => {
+    const { id } = request.params
+    try {
+        const roupas = await roupasModels.getId(id)
+
+        return response.status(200).json(roupas)
+    } catch (err) {
+        return err + 'Não foi possivel retornar os dados...'
+    }
+}
+
 const createdRoupa = async (request, response) => {
 
     try {
@@ -49,6 +60,7 @@ const updateRoupa = async (request, response) => {
 
 module.exports = {
     getAll,
+    getId,
     createdRoupa,
     deleteRoupa,
     updateRoupa

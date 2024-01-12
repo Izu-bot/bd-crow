@@ -14,6 +14,7 @@ const router = express.Router()
 
 // Router dos Produtos / Roupas
 router.get('/roupas', roupasController.getAll)
+router.get('/roupas/:id', roupasController.getId)
 router.post('/roupas', roupasMiddleware.validadeBody, roupasController.createdRoupa)
 router.delete('/roupas/:id', roupasController.deleteRoupa)
 router.put('/roupas/:id', roupasController.updateRoupa)

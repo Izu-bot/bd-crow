@@ -1,4 +1,5 @@
 const connection = require('./connect')
+const bcrypt = require('bcrypt')
 
 const getAll = async () => {
     const client = await connection()
@@ -18,13 +19,18 @@ const addCliente = async (cliente) => {
     const client = await connection()
 
     try {
-        const { name, surname, address, cpf, date } = cliente
-        const sql = 'insert into tb_cliente (nm_cliente, ds_sobrenome, ds_endereco, ds_cpf, dt_nascimento) values ($1, $2, $3, $4, $5)'
-
-        const convertDate = new Date(date)
-        const formatDate = convertDate.toDateString()
+        const { name, surname, address, cpf, date, email, senha } = cliente
+        const sqlCliente = 'insert into tb_cliente (nm_cliente, ds_sobrenome, ds_endereco, ds_cpf, dt_nascimento) values ($1, $2, $3, $4, $5) RETURNING id_cliente'
         
-        const createdClient = await client.query(sql, [name, surname, address, cpf, formatDate])
+        // Insere o cliente e captura o ID gerado
+        const createdClient = await client.query(sqlCliente, [name, surname, address, cpf, new Date(date).toDateString()])
+        const idCliente = createdClient.rows[0].id_cliente
+
+        // Insere as credenciais do cliente
+        const senhaHash = await bcrypt.hash(senha, 10);
+        const sqlCredenciais = 'insert into tb_dados (id_cliente, email, senha) values ($1, $2, $3)'
+        await client.query(sqlCredenciais, [idCliente, email, senhaHash])
+
         return createdClient
     } catch (err) {
         console.log(err)

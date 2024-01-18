@@ -10,7 +10,12 @@ const pedidoController = require('./controllers/pedidosController')
 const detalheController = require('./controllers/detalheController')
 
 const carrinhoController = require('./controllers/carrinhoController')
+
+const credenciaisControler = require('./controllers/credenciaisController')
 const router = express.Router()
+
+// Router de login
+router.post('/login', credenciaisControler.realizarLogin)
 
 // Router dos Produtos / Roupas
 router.get('/roupas', roupasController.getAll)

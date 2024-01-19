@@ -17,7 +17,7 @@ const realizarLogin = async (request, response) => {
                 // login bem sucedido
 
                 // Gera o token JWT
-                const token = jwt.sign({ userId: id_cliente, email }, secretKey, { expiresIn: '1h' });
+                const token = jwt.sign({ userId: id_cliente, email }, secretKey, { expiresIn: '1h', subject: '1' });
 
                 // Retorna o token na resposta
                 return response.status(200).json({ message: 'Login bem sucedido!', id_cliente, token });

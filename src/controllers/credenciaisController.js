@@ -1,7 +1,7 @@
 require('dotenv').config();
 const secretKey = process.env.SECRET_KEY
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 const credenciaisModels = require('../models/credenciaisModels')
 
 const realizarLogin = async (request, response) => {
@@ -18,6 +18,15 @@ const realizarLogin = async (request, response) => {
 
                 // Gera o token JWT
                 const token = jwt.sign({ userId: id_cliente, email }, secretKey, { expiresIn: '1h', subject: '1' });
+
+                // Decodificar o token
+                const decodedToken = jwt.verify(token, secretKey)
+
+                // Armazena os dados do usuario na sessão
+                request.session.usuario = {
+                    id_cliente: decodedToken.userId,
+                    email: decodedToken.email
+                }
 
                 // Retorna o token na resposta
                 return response.status(200).json({ message: 'Login bem sucedido!', id_cliente, token });

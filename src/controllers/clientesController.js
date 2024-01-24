@@ -35,9 +35,21 @@ const updateCLiente = async (request, response) => {
     return response.status(204).json()
 }
 
+const listClient = async (request, response) => {
+    const {id} = request.params
+    try {
+        const cliente = await clienteModels.listClient(id)
+        return response.status(200).json(cliente)
+
+    } catch (err) {
+        return err + 'Não foi possivel retornar os dados...'
+    }
+}
+
 module.exports = {
     getAll,
     addCliente,
     deleteCliente,
-    updateCLiente
+    updateCLiente,
+    listClient
 }
